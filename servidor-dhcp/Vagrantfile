@@ -1,0 +1,22 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.network "private_network", type: "dhcp"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "512"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt-get install -y isc-dhcp-server
+    sudo service isc-dhcp-server stop
+
+    # Configuração do servidor DHCP
+    echo "subnet 192.168.50.0 netmask 255.255.255.0 {" | sudo tee -a /etc/dhcp/dhcpd.conf
+    echo "  range 192.168.50.10 192.168.50.50;" | sudo tee -a /etc/dhcp/dhcpd.conf
+    echo "  option routers 192.168.50.1;" | sudo tee -a /etc/dhcp/dhcpd.conf
+    echo "  option domain-name-servers 8.8.8.8, 8.8.4.4;" | sudo tee -a /etc/dhcp/dhcpd.conf
+    echo "}" | sudo tee -a /etc/dhcp/dhcpd.conf
+
+    sudo service isc-dhcp-server start
+  SHELL
+end
