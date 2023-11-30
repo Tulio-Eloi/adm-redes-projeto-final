@@ -1,28 +1,119 @@
 # adm-redes-projeto-final
-Projeto Final para Redes
-<h1>Discentes: Tulio Eloi Carodoso e Silva e Luana Cristina dos Santos</h1>
+    Projeto Final para Redes
+    O propósito deste projeto é elaborar, implantar e administrar um ambiente de rede utilizando tecnologia Linux, com foco em serviços como DHCP, DNS, Web, FTP, NFS e a utilização de virtualização por meio de Vagrant e Docker.
+<h1>Discentes: Luana Cristina dos Santos Alves e Tulio Eloi Cardoso e Silva.</h1>
 
-## Comandos a seres executados para poder fazer o projeto funcionar
+## Pré-requisitos para os SO Linux
+    Antes de começar, verifique se de tem instalado os seguintes componentes:
+- [VirtualBox](https://www.virtualbox.org/)
+- [Vagrant](https://www.vagrantup.com/)
+- [Docker](https://www.docker.com/)
+
+## Clone o repositório do projeto em sua máquina
+    ```bash
+        git clone https://github.com/Tulio-Eloi/adm-redes-projeto-final.git
+    ```
+ 
+## Comandos a seres executados para poder fazer o projeto rodar
     Entrar na pasta servidor-dhcp-cliente e rodar o seguinte comando
-    sudo vagrant up vm2
-
-    Logo após entrar na pasta servidor-dhcp-server e rodar o seguinte comando
     sudo vagrant up vm1
 
-    Pronto você subiu as máquinas virtuais.
+    Logo após entrar na pasta servidor-dhcp-server e rodar o seguinte comando
+    sudo vagrant up vm2
 
-## Acessando as maquinas
-    Para acessar as maquinas você precisa estar com seu diretório no terminal o mesmo o qual foi inciado as máquinas.
+## Acessando as máquinas e executantando testes
+    Para acessar as máquinas você precisa estar com seu diretório no terminal o mesmo o qual foi inciado as máquinas.
     Para verificar seu status:
-    $ sudo vagrant satus
+
+    $ sudo vagrant status
 
     Entrar dentro da VM:
-    $ sudo vagrant ssh
 
-## Desligando as maquinas e destruindo elas
-    Para DEsligar as maquinas você precisa estar com seu diretório no terminal o mesmo o qual foi inciado as máquin
+    ```bash
+       vagrant ssh vm1
+    ```
+
+    Verifique a Configuração da Rede:
+
+    ```bash
+        ping 192.168.50.11  #Verifique a conecção com a VM2
+        exit
+    ```
+
+## Servidor DHCP
+    O Dynamic Host Configuration Protocol (DHCP) é um protocolo de rede que habilita os dispositivos a adquirirem de forma automática um endereço IP e outras configurações de rede assim que se conectam a uma rede.
+
+### Status do Servidor
+
+    Para verificar o status do servidor DHCP, digite o comando:
+
+    ```bash
+        sudo systemctl status isc-dhcp-server
+    ```
+
+## Servidor DNS
+    O servidor DNS (Domain Name System) desempenha o papel de converter nomes de domínio em endereços IP correspondentes.
+
+### Status do Servidor
+
+    Para verificar o status do servidor DNS, digite o comando:
+
+    ```bash
+        docker logs bind9-container
+    ```
+
+## Servidor Apache
+
+    O Apache HTTP Server é uma aplicação de servidor web de código aberto utilizada para hospedar sites na Internet.
+
+### Teste do Servidor
+
+Abra o seu navegador nesta página: [http://localhost](http://localhost)
+
+### Status do Servidor
+
+    Para verificar o status do servidor Apache, digite o comando:
+
+    ```bash
+        docker logs apache-container
+    ```
+
+## Servidor FTP
+
+    O servidor FTP é um conjunto de regras e procedimentos que possibilitam a transferência de arquivos entre um cliente e um servidor por meio de uma rede.
+
+### Teste do Servidor
+
+    Abra o terminal e digite:
+
+    ```bash
+        ftp admin@192.168.0.10
+    ```
+
+### Status do Servidor
+
+    Para verificar o status do servidor FTP, digite o comando:
+
+    ```bash
+        docker logs ftp-container
+    ```
+
+## Servidor NFS
+
+    O NFS, um protocolo de compartilhamento de arquivos, viabiliza o acesso a arquivos em um servidor remoto por um sistema operacional, proporcionando a sensação de que esses arquivos estão armazenados localmente.
+
+### Status do Servidor
+
+    Para verificar o status do servidor NFS, digite o comando:
+
+    ```bash
+    docker logs nfs-test-server
+    ```
+
+## Desligando as máquinas e destruindo elas
+    Para desligar as máquinas você precisa estar com seu diretório no terminal o mesmo o qual foi inciado
    
-    Desligar as maquinas:
+    Desligar as máquinas:
     sudo vagrant halt
 
     Destruindo as máquinas:
