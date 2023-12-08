@@ -33,7 +33,7 @@ Entrar dentro da VM:
 
 Verifique a Configuração da Rede:
 
-    ping 192.168.50.11  #Verifique a conecção com a VM2
+    ping 192.168.50.11  #Verifique a conexão com a VM2
 
 
 ## Servidor DHCP
@@ -52,7 +52,7 @@ O servidor DNS (Domain Name System) desempenha o papel de converter nomes de dom
 
 Para verificar o status do servidor DNS, digite o comando:
 
-    docker logs bind9-container
+    dig localhost example.com
 
 
 ## Servidor Apache
@@ -68,7 +68,9 @@ Abra o seu navegador nesta página: [http://localhost](http://localhost)
 Para verificar o status do servidor Apache, digite o comando:
 
 
-    docker logs apache-container
+    sudo docker logs web-container
+
+    ip a
 
 
 ## Servidor FTP
@@ -79,7 +81,9 @@ O servidor FTP é um conjunto de regras e procedimentos que possibilitam a trans
 
 No terminal e digite:
 
-        ftp admin@192.168.0.10
+        sudo docker logs ftp-container
+
+        ftp localhost
 
 
 ### Status do Servidor
